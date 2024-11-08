@@ -1,0 +1,745 @@
+<!--
+    NOTAS:
+        - fazer darktheme pros modais de dados
+        - o baralho
+        - um notificador pra lembrar de salvar antes de sair.
+-->
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- Link para o CSS do Bootstrap 5 -->
+        <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+        crossorigin="anonymous"
+        />
+        <!-- Ícone da página -->
+        <link
+            rel="icon"
+            href="https://pages.greatpages.com.br/assimilacaorpg.pages.net.br/1730918302/imagens/desktop/417370-ba0b1e85fde3227c42f0e228c2d53977.png"
+        />
+        <!-- Fonte -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap"
+            rel="stylesheet"
+        />
+        <!-- Link para os ícones do Bootstrap -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+        />
+
+        <!-- Título -->
+        <title>Assimilação RPG Fichas</title>
+    </head>
+    <body
+        class="bg-light mb-3 p-2"
+        style="font-family: 'Montserrat', sans-serif"
+    >
+        <!-- Navbar -->
+        <nav
+            class="navbar border-bottom border-dark d-flex justify-content-between align-items-center"
+        >
+            <img
+                src="img/assimilacaoLogo.webp"
+                alt="assimilacaoLogo"
+                class="navbar-brand px-5"
+            />
+            <h1>FICHAS</h1>
+            <div class="ml-auto">
+                <button class="btn btn-outline-dark mr-2 fw-bold" id="botaoComoUsar">
+                    Como usar
+                </button>
+                <button class="btn btn-outline-dark mr-2 fw-bold" id="importar">
+                    Importar
+                </button>
+                <input type="file" id="importarFicha" style="display: none;" />
+                <button class="btn btn-outline-dark mr-2 fw-bold" id="exportar">
+                    Exportar
+                </button>
+                <button class="btn btn-outline-dark mr-2 fw-bold" id="botaoCreditos">
+                    Créditos
+                </button>
+                <button id="tema" class="btn btn-outline-dark">
+                    <i class="bi bi-moon"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- FICHA DO PERSONAGEM -->
+        <div class="container mt-2">
+            <form>
+                <!-- LINHA CABO DE GUERRA -->
+                <div class="row align-items-center">
+                    <!-- Input de pontos de Determinação -->
+                    <div class="col-auto">
+                        <input type="number" class="form-control form-control-sm fw-bold" id="pontosDeterminacao" placeholder="PD" style="width: 60px;" />
+                    </div>
+                    <div class="col-auto">
+                        <h1>Determinação</h1>
+                    </div>
+                
+                    <!-- Dez botões de nível de Assimilação -->
+                    <div class="col-auto d-flex">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-outline-dark" onclick="toggleButton(this)"></button>
+                            <button type="button" class="btn btn-outline-dark" onclick="toggleButton(this)"></button>
+                            <button type="button" class="btn btn-outline-dark" onclick="toggleButton(this)"></button>
+                            <button type="button" class="btn btn-outline-dark" onclick="toggleButton(this)"></button>
+                            <button type="button" class="btn btn-outline-dark" onclick="toggleButton(this)"></button>
+                            <button type="button" class="btn btn-outline-dark" onclick="toggleButton(this)"></button>
+                            <button type="button" class="btn btn-outline-dark" onclick="toggleButton(this)"></button>
+                            <button type="button" class="btn btn-outline-dark" onclick="toggleButton(this)"></button>
+                            <button type="button" class="btn btn-outline-dark" onclick="toggleButton(this)"></button>
+                            <button type="button" class="btn btn-outline-dark" onclick="toggleButton(this)"></button>
+                        </div>
+                    </div>
+                
+                    <div class="col-auto">
+                        <h1>Assimilação</h1>
+                    </div>
+                    <!-- Input de pontos de Assimilação -->
+                    <div class="col-auto">
+                        <input type="number" class="form-control form-control-sm fw-bold" id="pontosAssimilacao" placeholder="PA" style="width: 60px;" />
+                    </div>
+
+                    <!-- CSS para a cor do botão mudar quando clicado. -->
+                    <style>
+                        .botaoClicado {
+                            background-color:aqua !important;
+                            color: white;
+                        }
+                    </style>
+                </div>
+
+                <!-- PRIMEIRA LINHA -->
+                <div class="row">
+                    <!-- Nome do personagem -->
+                    <div class="col-md-3 mb-3">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="nomePersonagem"
+                            placeholder="Nome"
+                            style="font-weight: bold"
+                        />
+                    </div>
+
+                    <!-- Nível de saúde -->
+                    <div class="col-md-4 mb-3">
+                        <select
+                            class="form-control"
+                            id="saude"
+                            style="font-weight: bold"
+                        >
+                            <option value="" disabled selected>Saúde</option>
+                            <option>Saúde 5: Saudável</option>
+                            <option>Saúde 4: Ferido</option>
+                            <option>Saúde 3: -1 SUCESSO ou ADAPTAÇÃO</option>
+                            <option>Saúde 2: -1 SUCESSO</option>
+                            <option>Saúde 1: -2 SUCESSO</option>
+                            <option>Saúde 0: Morto</option>
+                        </select>
+                    </div>
+
+                    <!-- Propósitos Individuais -->
+                    <div class="col-md-5 mb-3">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="propositoIndividual"
+                            placeholder="Propósitos Individuais"
+                            style="font-weight: bold"
+                        />
+                    </div>
+                </div>
+
+                <!-- SEGUNDA LINHA -->
+                <div class="row">
+                    <!-- Ocupação -->
+                    <div class="col-md-2 mb-3">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="ocupacao"
+                            placeholder="Ocupação"
+                            style="font-weight: bold"
+                        />
+                    </div>
+
+                    <!-- Evento marcante -->
+                    <div class="col-md-3 mb-3">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="eventoMarcante"
+                            placeholder="Evento marcante"
+                            style="font-weight: bold"
+                        />
+                    </div>
+
+                    <!-- Geração -->
+                    <div class="col-md-2 mb-3">
+                        <select
+                            class="form-control"
+                            id="geracao"
+                            style="font-weight: bold"
+                        >
+                            <option value="" disabled selected>Geração</option>
+                            <option>Atual</option>
+                            <option>Pós-colapso</option>
+                            <option>Colapso</option>
+                            <option>Pré-colapso</option>
+                        </select>
+                    </div>
+
+                    <!-- Propósitos Relacionais -->
+                    <div class="col-md-5 mb-3">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="propositoRelacionais"
+                            placeholder="Propósitos Relacionais"
+                            style="font-weight: bold"
+                        />
+                    </div>
+                </div>
+                
+                <!-- TERCEIRA LINHA -->
+                <div class="row">
+                    <div class="col">
+                        <h2 class="fw-bold">INSTINTOS</h2>
+                    </div>
+                    <div class="col">
+                        <h2 class="fw-bold">CONHECIMENTOS</h2>
+                    </div>
+                    <div class="col">
+                        <h2 class="fw-bold">PRÁTICAS</h2>
+                    </div>
+                </div>
+
+                <!-- QUARTA LINHA -->
+                <div class="row">
+                    <!-- Aptidões Instintos -->
+                    <div class="col-md-4 mb-0">
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th
+                                        scope="col"
+                                        class="bg-dark text-light text-center fw-bold"
+                                    >
+                                        Reação
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        class="bg-dark text-light text-center fw-bold"
+                                    >
+                                        Percepção
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        class="bg-dark text-light text-center fw-bold"
+                                    >
+                                        Sagacidade
+                                    </th>
+                                </tr>
+                            </thead>
+                                <tr>
+                                    <td>
+                                        <input
+                                            type="number"
+                                            class="form-control fw-bold"
+                                            id="reacaoInstintos"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            type="number"
+                                            class="form-control fw-bold"
+                                            id="percepcaoInstintos"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            type="number"
+                                            class="form-control fw-bold"
+                                            id="sagacidadeInstintos"
+                                        />
+                                    </td>
+                                </tr>
+
+                                <!-- Linha de aptidões do meio -->
+                                <tr>
+                                    <td
+                                        class="bg-dark text-light text-center fw-bold"
+                                    >
+                                        Potência
+                                    </td>
+                                    <td
+                                        class="bg-dark text-light text-center fw-bold"
+                                    >
+                                        Influência
+                                    </td>
+                                    <td
+                                        class="bg-dark text-light text-center fw-bold"
+                                    >
+                                        Resolução
+                                    </td>
+                                </tr>
+
+                                <!-- Segunda linha de valores -->
+                                <tr>
+                                    <td>
+                                        <input
+                                            type="number"
+                                            class="form-control fw-bold"
+                                            id="potenciaInstintos"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            type="number"
+                                            class="form-control fw-bold"
+                                            id="influenciaInstintos"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            type="number"
+                                            class="form-control fw-bold"
+                                            id="resolucaoInstintos"
+                                        />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Aptidões Conhecimento -->
+                    <div class="col-md-4 mb-0">
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th
+                                        scope="col"
+                                        class="bg-dark text-light text-center fw-bold"
+                                    >
+                                        Agrário
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        class="bg-dark text-light text-center fw-bold"
+                                    >
+                                        Biológico
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        class="bg-dark text-light text-center fw-bold"
+                                    >
+                                        Exato
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input
+                                            type="number"
+                                            class="form-control fw-bold"
+                                            id="agrarioConhecimentos"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            type="number"
+                                            class="form-control fw-bold"
+                                            id="biologicoConhecimentos"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            type="number"
+                                            class="form-control fw-bold"
+                                            id="exatoConhecimentos"
+                                        />
+                                    </td>
+                                </tr>
+
+                                <!-- Linha de APTIDÕES do meio -->
+                                <tr>
+                                    <td
+                                        class="bg-dark text-light text-center fw-bold"
+                                    >
+                                        Medicina
+                                    </td>
+                                    <td
+                                        class="bg-dark text-light text-center fw-bold"
+                                    >
+                                        Social
+                                    </td>
+                                    <td
+                                        class="bg-dark text-light text-center fw-bold"
+                                    >
+                                        Artístico
+                                    </td>
+                                </tr>
+
+                                <!-- Linha de Inputs numéricos novamente -->
+                                <tr>
+                                    <td>
+                                        <input
+                                            type="number"
+                                            class="form-control fw-bold"
+                                            id="medicinaConhecimentos"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            type="number"
+                                            class="form-control fw-bold"
+                                            id="socialConhecimentos"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            type="number"
+                                            class="form-control fw-bold"
+                                            id="artisticoConhecimentos"
+                                        />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Aptidões Práticas -->
+                    <div class="col-md-4 mb-0">
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th
+                                        scope="col"
+                                        class="bg-dark text-light text-center fw-bold"
+                                    >
+                                        Esportivas
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        class="bg-dark text-light text-center fw-bold"
+                                    >
+                                        Ferramentas
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        class="bg-dark text-light text-center fw-bold"
+                                    >
+                                        Ofícios
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input
+                                            type="number"
+                                            class="form-control fw-bold"
+                                            id="esportivasPraticas"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            type="number"
+                                            class="form-control fw-bold"
+                                            id="ferramentasPraticas"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            type="number"
+                                            class="form-control fw-bold"
+                                            id="oficiosPraticas"
+                                        />
+                                    </td>
+                                </tr>
+
+                                <!-- Linha de APTIDÕES do meio -->
+                                <tr>
+                                    <td
+                                        class="bg-dark text-light text-center fw-bold"
+                                    >
+                                        Armas
+                                    </td>
+                                    <td
+                                        class="bg-dark text-light text-center fw-bold"
+                                    >
+                                        Veículos
+                                    </td>
+                                    <td
+                                        class="bg-dark text-light text-center fw-bold"
+                                    >
+                                        Infiltração
+                                    </td>
+                                </tr>
+
+                                <!-- Linha de Inputs numéricos novamente -->
+                                <tr>
+                                    <td>
+                                        <input
+                                            type="number"
+                                            class="form-control fw-bold"
+                                            id="armasPraticas"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            type="number"
+                                            class="form-control fw-bold"
+                                            id="veiculosPraticas"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            type="number"
+                                            class="form-control fw-bold"
+                                            id="infiltracaoPraticas"
+                                        />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- QUINTA LINHA -->
+                <div class="row">
+                    <!-- Equipamentos -->
+                    <div class="col-md-6">
+                        <textarea
+                            class="form-control"
+                            id="equipamentos"
+                            placeholder="Equipamentos"
+                            style="font-weight: bold; height: 100px"
+                        ></textarea>
+                    </div>
+
+                    <!-- Características -->
+                    <div class="col-md-6">
+                        <textarea
+                            class="form-control"
+                            id="caracteristicas"
+                            placeholder="Características"
+                            style="font-weight: bold; height: 100px"
+                        ></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- DADOS: BOTÃO FLUTUANTE -->
+        <button type="button" id="botaoDados" class="btn btn-primary rounded-circle position-fixed bottom-0 start-0 mb-4 ms-4" style="width: 70px; height: 70px;">
+            <i class="bi bi-dice-6 fs-4"></i>
+        </button>
+
+        <!-- DADOS: MODAL DE ESCOLHA -->
+        <div class="modal fade" id="modalDados" tabindex="-1" aria-labelledby="modalDadosLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content bg-light">
+                    <div class="modal-header">
+                        <h2 class="modal-title fw-bold" id="modalDadosLabel">ROLAR DADOS</h2>
+                        <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body fw-bold">
+                        <div class="row">
+                            <h3 class="fw-bold">Selecione quantos dados de cada tipo você vai jogar.</h3>
+                            <div class="col-auto d-flex align-items-center">
+                                <!-- Dado de 6 -->
+                                <i class="bi bi-square-fill fs-1 me-2"></i>
+                                <div class="d-flex ms-2">
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" type="radio" name="d6" value="0">
+                                        <label class="form-check-label fw-bold">0</label>
+                                    </div>
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" type="radio" name="d6" value="1">
+                                        <label class="form-check-label fw-bold">1</label>
+                                    </div>
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" type="radio" name="d6" value="2">
+                                        <label class="form-check-label fw-bold">2</label>
+                                    </div>
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" type="radio" name="d6" value="3">
+                                        <label class="form-check-label fw-bold">3</label>
+                                    </div>
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" type="radio" name="d6" value="4">
+                                        <label class="form-check-label fw-bold">4</label>
+                                    </div>
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" type="radio" name="d6" value="5">
+                                        <label class="form-check-label fw-bold">5</label>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="col-auto d-flex align-items-center">
+                                <!-- Dado de 10 -->
+                                <i class="bi bi-suit-diamond-fill fs-1 me-2"></i>
+                                <div class="d-flex ms-2">
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" type="radio" name="d10" value="0">
+                                        <label class="form-check-label fw-bold">0</label>
+                                    </div>
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" type="radio" name="d10" value="1">
+                                        <label class="form-check-label fw-bold">1</label>
+                                    </div>
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" type="radio" name="d10" value="2">
+                                        <label class="form-check-label fw-bold">2</label>
+                                    </div>
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" type="radio" name="d10" value="3">
+                                        <label class="form-check-label fw-bold">3</label>
+                                    </div>
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" type="radio" name="d10" value="4">
+                                        <label class="form-check-label fw-bold">4</label>
+                                    </div>
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" type="radio" name="d10" value="5">
+                                        <label class="form-check-label fw-bold">5</label>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="col-auto d-flex align-items-center">
+                                <!-- Dado de 12 -->
+                                <i class="bi bi-pentagon-fill fs-1 me-2"></i>
+                                <div class="d-flex ms-2">
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" type="radio" name="d12" value="0">
+                                        <label class="form-check-label fw-bold">0</label>
+                                    </div>
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" type="radio" name="d12" value="1">
+                                        <label class="form-check-label fw-bold">1</label>
+                                    </div>
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" type="radio" name="d12" value="2">
+                                        <label class="form-check-label fw-bold">2</label>
+                                    </div>
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" type="radio" name="d12" value="3">
+                                        <label class="form-check-label fw-bold">3</label>
+                                    </div>
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" type="radio" name="d12" value="4">
+                                        <label class="form-check-label fw-bold">4</label>
+                                    </div>
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" type="radio" name="d12" value="5">
+                                        <label class="form-check-label fw-bold">5</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" id="botaoResultados" class="btn btn-primary fw-bold" data-bs-dismiss="modal" onclick="rolarDados()">ROLAR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DADOS: MODAL DE RESULTADO -->
+        <div class="modal fade" id="modalResultados" tabindex="-1" aria-labelledby="modalResultadosLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content bg-light">
+                    <div class="modal-header">
+                        <h2 class="modal-title fw-bold" id="modalResultadosLabel">RESULTADOS</h2>
+                        <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body fw-bold" id="modalResultadosBody">
+                        <div class="row"></div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary fw-bold" data-bs-dismiss="modal">Entendido</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL COMO USAR -->
+        <div class="modal fade" id="modalComoUsar" tabindex="-1" aria-labelledby="modalComoUsarLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content bg-light">
+                    <div class="modal-header">
+                        <h2 class="modal-title fw-bold" id="modalComoUsarLabel">COMO USAR</h2>
+                        <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body fw-bold">
+                        <p>Atualmente no Assimilação RPG Fichas, você deve preencher a ficha do personagem e jogar, e quando acabar, deverá clicar no botão <span style="color: aqua;">EXPORTAR</span> que fará um download no seu computador ou celular de um arquivo com todas as informações do seu personagem. Toda vez que você voltar, aperte o botão <span style="color: aqua;">IMPORTAR</span> para selecionar o mesmo arquivo, desse modo a ficha será preenchida automaticamente com todos as informações salvas.</p>
+                        <p>Ou seja, funciona como um <span style="color: aqua;">save de videogame.</span> Lembre-se de <span style="color: aqua;">sempre exportar sua ficha antes de sair</span> para não perder nenhuma alteração no personagem, e ter que escrever tudo de novo!</p>
+                        <p>Assimilação RPG Fichas segue as regras do Fastplay de Assimilação RPG.</p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary fw-bold" data-bs-dismiss="modal">Entendido</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL CRÉDITOS -->
+        <div class="modal fade" id="modalCreditos" tabindex="-1" aria-labelledby="modalCreditosLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content bg-light">
+                    <div class="modal-header">
+                        <h2 class="modal-title fw-bold" id="modalCreditosLabel">CRÉDITOS</h2>
+                        <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body fw-bold">
+                        <p>TODOS os direitos de Assimilação RPG e de seu Fastplay são de seus devidos donos e criadores:</br>
+                            - Rakin (@Rakin na rede X)</br>
+                            - Vinícius Motta (@ViniciusLAUzito na rede X)</br>
+                            - New Order Editora (@EditoraNewOrder na rede X)</br>
+                            - CapyCat Games (@CapyCatGames na rede X)</br>
+                            - @AssimilacaoRPG na rede X</br>
+                        </p>
+
+                        <p>
+                            Assimilação RPG Fichas criado por Guilherme Gouvêa em 11/2024</br>
+                            - <a href="https://github.com/guilhermeperluxodegouvea" target="_blank">Github</a></br>
+                            - Reportar bugs e sugestões: jogos10 no Discord 
+                        </p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary fw-bold" data-bs-dismiss="modal">Entendido</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Incluindo jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- Incluindo Bootstrap 5 -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Script JS -->
+        <script src="js/script.js"></script>
+    </body>
+</html>
